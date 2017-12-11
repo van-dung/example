@@ -1,0 +1,9 @@
+\section{Conclusions}
+In this chapter, we directly solve the $l1$-norm minimization problem in NILM by applying three proposed algorithms, including:
+\begin{itemize}
+\item LAE-based algorithm: this algorithm is a brute force method to apply all possible combinations of states to calculate the absolute error between the aggregate power and the total power demand corresponding to each combination. The combination giving the least value of error is selected to determine the state of devices;
+\item State difference based algorithm: instead of selecting the least absolute error, this algorithm finds all possible combinations giving an error around it and then compares with the previous state to to select one having the smallest Hamming distance;
+\item State transition probability based algorithm: the solution is selected among suitable combinations by considering the state transition probability from the previous state to the current state of each device.
+\end{itemize}
+
+The experimental results show that by applying the state difference and state transition probability to select suitable combination of state, performance of the brute force algorithm is improved and outperforms the edge detection one. Nevertheless, these proposed algorithms show an exponential complexity and may be intractable with larger number of devices. In addition, an excessive training data is necessary to learn the characteristics of each device such as power demand and state transition probability.

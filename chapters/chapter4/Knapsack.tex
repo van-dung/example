@@ -1,0 +1,84 @@
+
+\subsection{Problem formulation}
+%%------------------ modification: add a part of one-state devices
+
+\paragraph*{One-state devices}
+Firstly, let consider the simplest case in which each device can only operate at a unique stable state with a corresponding power demand $w_i$. Denote $s_i$ as the state indicator of device $i$ and notation $^{(1)}$ for one-state using case, problem \eqref{eqSS2} becomes:
+\begin{eqnarray}\label{eqSS3}
+& &\min_{\mathbf{s}}{E^1(\mathbf{s})=\left |\sum_{i=1}^N{w_is_i}-x\right |}\\
+\mbox{subject to } & &s_i\in \{0,1\}, i=1,\ldots ,N, \nonumber
+\end{eqnarray}
+where $\mathbf{s} = \{s_1,s_2,\ldots ,s_N\}$.
+Assuming device $i$ is in on-state with probability of $p_i,0\leq p_i\leq 1$, the probability mass function is then:
+\begin{equation}\label{eqSS4}
+Pr(s_i) = p_i^{s_i}(1-p_i)^{(1-s_i)}.
+\end{equation}
+%
+Because the operation of $N$ devices is assumed to be independent, the coincidence probability, the probability that all events happen simultaneously, is as follows:
+\begin{eqnarray}\label{eqSS6}
+Pr(\mathbf{s})& =& \prod_{i=1}^N{Pr(s_i)}\nonumber \\
+&=&\prod_{i=1}^N{p_i^{s_i}(1-p_i)^{(1-s_i)}}.
+\end{eqnarray}
+To reduce the computational complexity, the log-linear form can be applied to transform the multiplication in~\eqref{eqSS6} to an addition, which gives:
+\begin{eqnarray}\label{eqSS7}
+L^1(\mathbf{s}) &=& -\log{(Pr\left(\mathbf{s})\right)} \nonumber \\
+&=&-\log{\left( \prod_{i=1}^N{p_i^{s_i}(1-p_i)^{(1-s_i)}}\right)}\nonumber \\
+&=& -\sum_{i=1}^N{\left(s_i\log{p_i}+(1-s_i)\log{(1-p_i)}\right)}.
+\end{eqnarray}
+Denote $L^1(s_i) = (1-s_i) l^1_{i0}+s_i l^1_{i1}$ with $l^1_{i0} = -\log{(1-p_i)}$ and $l^1_{i1} = -\log{p_i}$, Eq.~\eqref{eqSS7} can be written as
+\begin{eqnarray}
+L^1(\mathbf{s}) &=& \sum_{i=1}^N{L^1(s_i)}.
+\end{eqnarray}
+By this transformation, the increase of $Pr(\mathbf{s})$ corresponds to the decrease of $L^1(\mathbf{s})$. The problem is now to find a combination of operating devices not only giving the least absolute error $E^1(\mathbf{s})$ but also having the maximum probability, i.e. the minimum value of $L^1(\mathbf{s})$. Therefore, the problem~\eqref{eqSS3} is developed to a co-optimization problem as follows:
+\begin{eqnarray}\label{eqSS8}
+& &\min_{\mathbf{s}}{\left[P^1(\mathbf{s}) = E^1(\mathbf{s}) + \lambda \times L^1(\mathbf{s})\right]}\\
+\mbox{subject to } & & \sum_{i=1}^N{w_is_i} \leq x+\epsilon \nonumber \\
+& &s_i\in \{0,1\}, i=1,\ldots ,N, \nonumber
+\end{eqnarray}
+where $\lambda$ is a regularization parameter and empirically chosen, $\epsilon$ corresponds to the standard deviation of the aggregate power consumption. The problem~\eqref{eqSS8} is a kind of \textbf{0-1 Knapsack problem}, in which the aim is to fill the knapsack by selecting among various objects, each of which having a particular weight and giving a particular profit~\cite{Lagoudakis96the0-1}. The optimization problem is then to choose the objects in order to obtain the maximum profit while respecting the knapsack capacity.
+%%------------------ end modification
+
+
+
+
+%=======================================
+\paragraph*{Multi-state devices}
+Return to the general case where each device has a finite number of states, the following condition needs to be satisfied:
+\begin{equation}
+\sum_{j=1}^{m_i}{s_{ij}}\leq 1,s_{ij} \in \{0,1\}, i=1,\ldots,N,
+\end{equation}
+where $m_i$ is the number of states of device $i$.
+Therefore, the operating probability of device $i$, denoted as $Pr(\mathbf{s}_i)$, $\mathbf{s}_i = \{s_{i1},s_{i2},\ldots,s_{im_i}\}$, is
+\begin{eqnarray}\label{eqSS9}
+Pr(\mathbf{s}_i) = p_{i0}^{\prod_{j=1}^{m_i}{(1-s_{ij})}}\times \prod_{k=1}^{m_i}{p_{ik}^{\prod_{j=1,j\neq k}^{m_i}{s_{ik}(1-s_{ij})}}},
+\end{eqnarray}
+where  $p_{i0} = p(s_{ij}=0, j=1,\ldots,m_i)$ is the probability of off-state of device $i$ and $p_{ik} = p(s_{ik}=1,s_{ij}=0,\forall j\neq k)$ is the probability of operating at state $k$. Intuitively, we have $\sum_{j=0}^{m_i}{p_{ij}}=1$. 
+Transforming Eq.~\eqref{eqSS9} to log-linear form gives
+\begin{eqnarray}\label{eqSS10}
+L^M(\mathbf{s}_i) &=& -\log{Pr(\mathbf{s}_i)} \nonumber\\
+&=& -\prod_{j=1}^{m_i}{(1-s_{ij})}\log{p_{i0}} \nonumber \\
+&& - \sum_{k=1}^{m_i}{\left\{\prod_{j=1,j\neq k}^{m_i}{s_{ik}(1-s_{ij})}\log{p_{ik}}\right\}}.
+%&=& \sum_{j=0}^{m_i}{l_{ij}}.
+\end{eqnarray}
+Denoting $l^M_{ik} = -\log{p_{ik}}, k=0,\ldots,m_i$, Eq.~\eqref{eqSS10} can be rewritten as
+\begin{equation}
+L^M(\mathbf{s}_i) = \prod_{j=1}^{m_i}{(1-s_{ij})l^M_{i0}}+\sum_{k=1}^{m_i}{\left\{\prod_{j=1,j\neq k}^{m_i}{s_{ik}(1-s_{ij})}l^M_{ik}\right\}}.
+\end{equation}
+Similarly to the case of one-state devices, the concincidence probability $Pr(\mathbf{s})$, $\mathbf{s} = \{\mathbf{s}_1,\ldots,\mathbf{s}_N\}$, and its respective log-linear form $L^M(\mathbf{s})$ can be formulated as
+\begin{eqnarray}\label{eqSS11}
+Pr(\mathbf{s}) &=& \prod_{i=1}^N{Pr(\mathbf{s}_i)}\\
+L^M(\mathbf{s})& =& \sum_{i=1}^N{L^M(\mathbf{s}_i)}.
+\end{eqnarray}
+
+As a consequence, the co-optimization problem to minimize the least absolute error in problem~\eqref{eqSS2} and maximize the coincidence probability in Eq.~\eqref{eqSS11} is modified to
+\begin{eqnarray}\label{eqSS12}
+&&\min_{\mathbf{s}}{\left[P^M(\mathbf{s}) = E^M(\mathbf{s}) + \lambda \times L^M(\mathbf{s})\right]} \\
+\mbox{subject to } &&\sum_{i=1}^N{\sum_{j=1}^{m_i}{w_{ij}s_{ij}}}\leq x+\epsilon \nonumber\\
+&& \sum_{j=1}^{m_i}{s_{ij}} \leq 1, j=1,\ldots,N \nonumber\\
+&&s_{ij}\in \{0,1\},  i=1,\ldots ,N,j=1,\ldots,m_i.\nonumber
+\end{eqnarray}
+Considering the state of devices as objects and the aggregate power consumption as the knapsack capacity, Eq.~\eqref{eqSS11} is equivalent to the Knapsack problem. The state detection is apparently similar to dividing the available objects into groups and selecting a maximum of one object from each group to fill the knapsack. Hence, the problem~\eqref{eqSS12} can be considered as a so-called \textbf{Multiple-Choice Knapsack (MCK)} problem~\cite{Bean88}.
+
+In SmartSense, at each data point, an algorithm will be applied to solve the co-optimization problem to find the corresponding state of each device. To solve the Knapsack problem, the naive and straightforward approach is brute force, as introduced in Chapter~\ref{l1norm}. However, the exponential complexity makes it intractable with large number of devices. Besides, there are several other approaches such as branch and bound \cite{Martello1980276,DYER1984231,Lukata1997}, genetic algorithm \cite{Anagun2006,Singh07,Fukunaga08,Shen11}, dynamic programming (DP)~\cite{Toth79,Bean88}, compositional Pareto-algebraic heuristic (CPH) \cite{Shojaei13,Shojaei5227146,Geilen07,Geilen05,Geilen07acm,Hifi04,Yukish2004}, or combining DP with branch and bound~\cite{Martello99}.
+
+In this study, we focus on CPH and DP, two most effective approaches in Knapsack problem, to apply in the context of SmartSense. These algorithms have some driving parameters allowing to reduce the computational complexity.

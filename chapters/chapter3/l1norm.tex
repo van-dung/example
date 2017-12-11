@@ -1,0 +1,141 @@
+% Chapter 4
+
+\chapter{Modeling and analyzing of attenuation in optical interconnects} % Write in your own chapter title
+\label{l1norm}
+%\addtotoc{State of the Arts}
+\lhead{\emph{Algorithms for NILM based on $l1$-norm Minimization}} % Write in your own chapter title to set the page header
+
+In this chapter, we try to solve the $l1$-norm minimization problem in Eq.~\eqref{eqI7} defined in Section~\ref{nilm} by brute force approach, also called Least Absolute Error (LAE) based algorithm. Thereby, all possible combinations of states will be sequentially tested and the most suitable one will be selected as solution. However, because of the ambiguity on power demand of different devices, many combinations can give the same or near results, which reduces the algorithm accuracy. To improve performance, we propose to apply an additional information to select the solution among all possible combinations. This is a contribution to research on NILM. Two new methods are studied and introduced in this chapter. The first one, state difference-based algorithm, uses the Hamming distance between the possible combinations and the previous state of devices to find the solution for the $l1$-norm minimization problem, as introduced in Section~\ref{diff}. Meanwhile, the second one, called state transition probability-based algorithm and introduced in Section~\ref{proba}, considers the state transition probability from previous state to current state to determine the most suitable combination. The three proposed algorithms will be simulated in Matlab with data retrieved from a set of devices in our laboratory. Simulation results will be then compared with edge detection algorithm~\cite{Hart92}.
+\section{Introduction}\label{LAE}
+\section{Loss at device level}\label{LAE}
+The $l1$-norm minimization problem for Equation~\eqref{eqI7} is presented as follows:
+\begin{eqnarray}\label{eqL1}
+ &&\min_{\mathbf{s}}\parallel x(t)-\sum_{i=1}^{N}{\sum_{j=1}^{m_i}{s_{ij}(t)\times w_{ij}}}\parallel\\
+\mbox{subject to:}&& s_{ij}(t)\in \{0,1\}, i=1,\ldots,N,j=1,\ldots,m_i\nonumber\\
+&&\sum_{j=1}^{m_i}{s_{ij}(t)}\in \{0,1\}, i=1,\ldots,N. \nonumber
+\end{eqnarray} 
+
+To find the solution for problem \eqref{eqL1}, the conditions are at first processed by presenting all possible combinations of state vector $\mathbf{s}$ in matrix $\mathbf{S}$. Each row of $\mathbf{S}$ corresponds to a combination. For example, if there are two devices and each of them has two operation states, the state matrix $\mathbf{S}$ is defined as
+\begin{equation*}
+\mathbf{S}=\left[ \begin{array}{cccc}
+0&0&0&0\\
+0&0&0&1\\
+0&1&0&1\\
+0&1&0&0\\
+0&1&1&0\\
+0&0&1&0\\
+1&0&1&0\\
+1&0&0&0\\
+1&0&0&1
+\end{array}
+\right]
+\end{equation*}
+Then, all combinations will be sequentially applied to the following equation to calculate the absolute error between the aggregate power and the total power demand of devices with corresponding state defined as
+\begin{equation}\label{eqL2}
+e(k) = |x(t) - \mathbf{s}^{(k)}\times \mathbf{w}^T|,
+\end{equation}
+where $e(k)$ is the absolute error corresponding to the combination $s^{(k)}$ in row $k$ of matrix $\mathbf{S}$. The combination giving the least value of $e(k)$ is selected as the solution. Therefore, this method is also called Least Absolute Error (LAE) based algorithm and presented in Algorithm~\ref{algoL1}. Obviously, the LAE based algorithm is exponentially complex and may be intractable with a large number of devices. However, it is considered in this chapter to study the performance improvement with the extrinsic information.
+
+\begin{algorithm}
+\caption{LAE-based algorithm for $l1$-norm minimization problem.}\label{algoL1}
+\begin{algorithmic}[1]
+\Function{LAEsolve}{$x,\mathbf{w}$}
+\State Find all possible combinations of $\mathbf{s}$ and save in matrix $\mathbf{S}$
+\State $l = \text{length}(x),x(0) = 0$
+	\For {$t=1,\ldots,l$}
+		\State $\mathbf{s} = \argmin_{\mathbf{s^{(k)}}\in \mathbf{S}}{|x(t) - \mathbf{s^{(k)}}\times \mathbf{w}^T|}$
+		\State $ \mathbf{S_{out}}(t) = \mathbf{s}$
+	\EndFor
+	%\State \textbf{end for}
+\State output = matrix $\mathbf{S_{out}}$
+\EndFunction
+%\State \textbf{end function}
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
+
+
+
+\section{Signal to noise ratio and model of loss at the system level}\label{diff}
+In real condition, power consumption of a device is not stable. It can vary around an average value due to noise. In order not to leave out the true combination, it is necessary to retain the combinations giving an error closed to the least absolute error value and apply an additional constraint to select the solution: among all possible combinations, the final solution gives the smallest Hamming distance with the previous state. Hamming distance between two binary vectors is defined as the number of positions at which the corresponding values are different. 
+A combination at row $k$ of $\mathbf{S}$ is retained if it satisfies the following condition:
+\begin{equation}\label{eqL22}
+\frac{|e(k)-e_{LAE}|}{e_{LAE}}\leq \gamma,
+\end{equation}
+where $e_{LAE}$ denotes the least absolute error and $\gamma$ is an empirically chosen threshold.
+If this value is too small, the true solution of state vector $\mathbf{s}$ may be left out, while large value increases the number of retained combinations and the risk of error detection. Therefore, the selection of $\gamma$ needs to consider the standard deviation of the power consumption of devices as well as the difference between their power demand. Other combinations not satisfying condition \eqref{eqL22} will be ignored.
+Finally, the combination having the smallest distance to the previous state is selected as the current state of devices, i.e.,
+\begin{equation}
+\mathbf{s} = \argmin_{\mathbf{s}\in \mathbf{S_C}}{|\mathbf{s}\oplus \mathbf{s}(t-1)|},
+\end{equation}
+where $\mathbf{S_C}$ is the set of combinations satisfying condition \eqref{eqL22}. The step-by-step procedure for state difference based method for $l1$-norm minimization problem is presented in Algorithm~\ref{algoL2}.
+The retention of the combinations giving an absolute error close to the least one can prevent the algorithm from rejecting the accurate solution. However, this also increases the amount of computations to process the retained combinations, depending on the ambiguity level of the set of devices.
+
+\begin{algorithm}
+\caption{State difference based algorithm for $l1$-norm minimization problem.}\label{algoL2}
+\begin{algorithmic}[1]
+\Function{DIFFsolve}{$x,\mathbf{w}$,$\gamma$}
+\State Find all possible combinations of $\mathbf{s}$ and save in matrix $\mathbf{S}$
+\State $l = \text{length}(x),x(0) = 0,K=\text{length}(\mathbf{S})$
+	\For{$t=1,\ldots,l$}
+	    \For{$k=1,\ldots,K$}
+	        \State $e(k) = |x(t)-s^{(k)}\times w^T|$
+	    \EndFor
+		\State $e_{LAE} = \min{\{e(i)|i=1,\ldots,K\}}$
+		\State Find $\mathbf{S_C}\subset \mathbf{S}: \forall \mathbf{s^{(i)}}\in \mathbf{S_C},|e(i)-e_{LAE}|\leq \gamma \times e_{LAE}$
+		\State $\mathbf{s} = \argmin_{\mathbf{s^{(i)}}\in \mathbf{S_C}}{\{|\mathbf{s^{(i)}}\oplus \mathbf{s}(t-1)|\}}$
+		\State $\mathbf{S_{out}}(t) = \mathbf{s}$ 
+	\EndFor
+\State output = matrix $\mathbf{S_{out}}$
+\EndFunction
+%\State \textbf{end function}
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
+
+\subsection{Impact of crosstalk noise in loss}
+\subsection{Impact of thermal issue in loss}\label{IoTherm}
+Different from the previous algorithm, this method considers the state transition probability of each device to determine the current state instead of calculating the Hamming distance from all suitable combinations to the previous state of devices. Transition probability of each device, as shown in Figure~\ref{fig:L1}, is obtained from the training period. Based on condition \eqref{eqL22}, a subset of suitable combinations is retained and the coincidence probability for each one is calculated by the product of state transition probability of each element device, i.e.,
+\begin{equation}\label{eqL5}
+Pr(\mathbf{s}(t)|\mathbf{s}(t-1)) = \prod_{i=1}^{N}{p((s_i(t)|s_i(t-1))},
+\end{equation}
+where $p((s_i(t)|s_i(t-1))$ denotes the state transition probability of device $i$. The combination giving the largest probability will be selected to determine the current state of devices. Algorithm~\ref{algoL3} details the state determination in $l1$-norm minimization problem based on the state transition probability.
+Similar to the state difference based algorithm, this method also needs more computations to calculate the coincidence transition probability of the retained combinations.
+
+\begin{figure}
+\centering
+\includegraphics[width=1\textwidth]{./chapters/chapter3/images/Athemium_trans_proba.pdf} 
+\caption{State transition probability of some devices in Athemium dataset obtained from a training period by attaching each of them to a power meter.} 
+\label{fig:L1} 
+\end{figure}
+
+\begin{algorithm}
+\caption{State transition probability based algorithm for $l1$-norm minimization problem.}\label{algoL3}
+\begin{algorithmic}[1]
+\Function{PROBsolve}{$x,\mathbf{w}$,$\gamma$}
+\State Find possible combinations of $\mathbf{s}$ and save in matrix $\mathbf{S}$
+\State $l = \text{length}(x),x(0) = 0,K=\text{length}(\mathbf{S})$
+	\For {$t=1,\ldots,l$}
+	    \For{$k=1,\ldots,K$}
+	        \State $e(k) = |x(t)-s^{(k)}\times w^T|$
+	    \EndFor
+		\State $e_{LAE} = \min{\{e(i)|i=1,\ldots,K\}}$
+		\State Find $\mathbf{S_C}\subset \mathbf{S}: \forall \mathbf{s^{(i)}}\in \mathbf{S_C},|e(i)-e_{LAE}|\leq \gamma \times e_{LAE}$
+		\State $\mathbf{s} = \argmax_{\mathbf{s^{(i)}}\in \mathbf{S_C}}{\{Pr(\mathbf{s^{(i)}}|\mathbf{s}(t-1))\}}$
+		\State $\mathbf{S_{out}}(t) = \mathbf{s}$
+	\EndFor
+\State output = matrix $\mathbf{S_{out}}$
+\EndFunction
+%\State \textbf{end function}
+\end{algorithmic}
+\end{algorithm}
+
+
+\input{./chapters/chapter3/results}
+\input{./chapters/chapter3/conclusions}

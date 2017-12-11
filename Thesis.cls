@@ -153,11 +153,11 @@
                 {University Name}}
                 {University Name}}
 \UNIVERSITY  {\texorpdfstring{\href{University Web Site URL Here (include http://)}
-                {UNIVERSITY NAME (IN BLOCK CAPITALS)}}
-                {UNIVERSITY NAME (IN BLOCK CAPITALS)}}
+                {UNIVERSITY OF RENNES 1}}
+                {UNIVERSITY OF RENNES 1}}
 \department  {\texorpdfstring{\href{Department or School Web Site URL Here (include http://)}
-                {Department or School Name}}
-                {Department or School Name}}
+                {University of Rennes 1}}
+                {University of Rennes 1}}
 \DEPARTMENT  {\texorpdfstring{\href{Department or School Web Site URL Here (include http://)}
                 {DEPARTMENT OR SCHOOL NAME (IN BLOCK CAPITALS)}}
                 {DEPARTMENT OR SCHOOL NAME (IN BLOCK CAPITALS)}}
@@ -168,8 +168,8 @@
                 {RESEARCH GROUP NAME (IN BLOCK CAPITALS)}}
                 {RESEARCH GROUP NAME (IN BLOCK CAPITALS)}}
 \faculty     {\texorpdfstring{\href{Faculty Web Site URL Here (include http://)}
-                {Faculty Name}}
-                {Faculty Name}}
+                {Ecole Doctorale MATISSE}}
+                {Ecole Doctorale MATISSE}}
 \FACULTY     {\texorpdfstring{\href{Faculty Web Site URL Here (include http://)}
                 {FACULTY NAME (IN BLOCK CAPITALS)}}
                 {FACULTY NAME (IN BLOCK CAPITALS)}}
@@ -315,7 +315,7 @@
     \cleardoublepage
 }\end{spacing}
 }
-\newcommand\listsymbolname{Abbreviations}
+\newcommand\listsymbolname{List of Acronyms}
 \usepackage{longtable}
 \newcommand\listofsymbols[2]{
 \btypeout{\listsymbolname}
@@ -326,7 +326,7 @@
 \begin{longtable}[c]{#1}#2\end{longtable}\par
     \cleardoublepage
 }
-\newcommand\listconstants{Physical Constants}
+\newcommand\listconstants{Constants}
 \usepackage{longtable}
 \newcommand\listofconstants[2]{
 \btypeout{\listconstants}

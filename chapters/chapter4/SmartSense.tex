@@ -1,0 +1,84 @@
+% Chapter 4
+
+% NOTE: 1. REPLACE THE MODEL AND DP BY SENSYS PAPER, RESIMULATE THE RESULTS FOR CPH AND ADD THE RESULT OF DP 
+
+\chapter{Error Correction Codes in optical interconnects -- Energy efficiency channel} % Write in your own chapter title
+\label{SmartSense}
+%\addtotoc{State of the Arts}
+\lhead{\emph{SmartSense: Sensor-Aided NILM}} % Write in your own chapter title to set the page header
+
+\section{The transmitted laser power and communication loss modeling}\label{model}
+\subsection{Point-to-point optical interconnect}
+In NILM, the disaggregation algorithms always try to extract the features from the overall electrical load signal to identify the devices. However, how can we discern the devices with the same power characteristics? For example~\cite{Laughman03PEM}, if the algorithms use the features related to the average power consumption such as power level, length of steady state, step-change, etc., to discriminate the devices, it can lead to a false detection when  separating an incandescent light bulb and a desktop computer, which consume the same power of 150W.
+\subsection{Model of loss}
+
+%---------------------------------
+\begin{figure}[!hbt]
+\begin{center}
+\includegraphics[width=1\textwidth]{./chapters/chapter4/images/SSmodel.pdf}
+\caption{SmartSense system model: an NILM system combining with a sensor network providing the operating probability of some specific devices.}
+\label{fig:S1}
+\end{center}
+\end{figure}
+
+To overcome this restriction and improve the performance of the detection algorithms, we propose to use the operating probability of each device as an additional feature. A low-cost and low-power WSN is proposed to be deployed in homes and buildings to monitor the operation of some specific devices. A system combining NILM with such a WSN, called SmartSense, is shown in Figure~\ref{fig:S1}. However, different from ViridiScope~\cite{Kim09Ubicomp} which is fully intrusive, our approach only monitors a subset of all devices, which makes it less intrusive. On the other hand, the purpose of the WSN is not to directly provide the state of devices but to estimate their state probability to improve the performance of NILM algorithms. Depending on the type of monitored devices, the corresponding sensors are deployed.
+For example, the operation of light-emitting devices such as screens, televisions, lamps can be detected by using the light intensity sensors, while the motor-based devices such as washing machine, fridge can be identified with a vibration sensor. Besides, other types of sensors can also be used to monitor other electrical equipment such as microphones, magnetometers, etc. A local algorithm in the WSN is then constructed to transform the detection of sensors to the probability of the corresponding devices. The probability estimation is executed based on the performance evaluation metrics including \textit{precision} and \textit{negative predictive value}, calculated by
+\begin{eqnarray}
+pr &=& \frac{TP}{TP+FP}\\
+npv &= &\frac{TN}{TN+FN},
+\end{eqnarray}
+where $pr$, $TP$, $FP$ and $FN$ are defined in Chapter~\ref{l1norm} on page~\pageref{eva-metrics}, while $npv$ and $TN$ denote the negative predictive value and the number of true negatives, respectively. A true negative is defined as a true detection of non-event. Therefore, the negative predictive value can be considered as the reliability of a detected non-event.
+As a consequence, when a device is determined as running, the probability of on-state and off-state are equal to $pr$ and $(1-pr)$, respectively. In contrast, when not running, they correspond to $(1-npv)$ and $npv$. For other unmonitored devices, all states can occur with the same probability.
+\subsection{BER and Laser Power Trade-Offs for uncoded optical interconnect}
+To prove the efficiency of the operating probability in improving the performance of NILM, in this research, we propose two main approaches for the state detection. In the first approach, the minimization problem \eqref{eqL1} of NILM can be modeled as a Knapsack problem and solved by two proposed algorithms including Compositional Pareto-algebraic Heuristic (CPH) and Dynamic Programming (DP). Meanwhile, the second one applies the probability to two existing algorithms including edge detection~\cite{Hart92} and dynamic time warping~\cite{Liao14}. In the rest of this chapter, the word \textit{event} is used to denote an on-state in the CPH, DP and DTW algorithms and an edge in the ED one.
+
+
+
+
+
+
+\section{Error Correction Codes for optical interconnects}\label{knapsack}
+%%------------------ modification: add a part of one-state devices
+Let consider again the $l1$-norm minimization problem \eqref{eqL1} of NILM:
+\begin{eqnarray}\label{eqSS2}
+& &\min_{\mathbf{s}}{E(\mathbf{s}) = \left|\sum_{i=1}^N{\sum_{j=1}^{m_i}{w_{ij}s_{ij}}}-x\right|} \\
+\mbox{subject to}&&s_{ij}\in \{0,1\},  i=1,\ldots,N,j=1,\ldots,m_i \nonumber\\
+& & \sum_{j=1}^{m_i}{s_{ij}}\in \{0,1\}, i=1,\ldots,N, \nonumber
+\end{eqnarray}
+where $E(\mathbf{s})$ can be interpreted as the absolute error between the measured aggregate power consumption and the total power demand of all operating devices. Solving Eq.~\eqref{eqSS2} is equivalent to find a vector $\mathbf{s}$ comprising all state indicators $s_{ij}$, $i=1,\ldots,N, j=1,\ldots,m_i$ of all devices, i.e., $\mathbf{s}=\{s_{11},\ldots,s_{1m_1},s_{21},\ldots,s_{2m_2},\ldots,s_{N1},\ldots,s_{Nm_N}\}$.
+In Chapter \ref{l1norm}, this problem is solved by applying three proposed methods including least absolute error, state difference and state transition probability. However, in the SmartSense system, by using an additional parameter related to the operating probability, a new problem is formulated from \eqref{eqSS2} and two methods are proposed to solve it including CPH and DP. The on/off state probability of each device is estimated as mentioned in Section \ref{model}. Nevertheless, as the sensors can only detect if a device is on or off but cannot distinguish its different power states, the operating probability will then be equally divided to all states, i.e. $p_{ij} = p_i/m_i,j=1,\ldots,m_i$. Let consider the problem formulation in the case that each device has only two states, on or off, and in a general case in which each device has a finish number of power states.
+
+\input{./chapters/chapter4/Knapsack}
+
+\subsection{Error Correction Code implementations -- Case study}\label{sec:algo}
+\subsubsection{Extended Hamming codes }\label{CPH}
+\input{./chapters/chapter4/CPH}
+
+\subsubsection{Reed--Solomon codes}\label{DP}
+\input{./chapters/chapter4/DP}
+
+
+
+
+
+\section{Energy and power savings from ECC}
+The edge detector was firstly proposed in \cite{Hart92} to detect the step-changes on the power signal. Both ED and DTW algorithms at first try to detect the rising edge and falling edge of a device activation and pair them together. Denote $\Delta x(t) = x(t) - x(t-1)$, a rising edge is detected at time $t$ if
+$\Delta x(t)\geq \gamma$,
+where $\gamma$ is empirically chosen so that it is small enough not to miss the edges, but large enough to ignore the variations in a stable period. In contrast, a falling edge is detected at time $(t-1)$ if $\Delta x(t)\leq -\gamma$. A rising edge and a falling edge are paired together if the difference between their height is lower than a threshold $\alpha$, i.e.,
+\begin{equation}
+|\Delta x(t_s) - |\Delta x(t_e)||\leq \alpha.
+\end{equation}
+In the case of multi-state devices, it appears more than one consecutive rising edges or falling edges in an activation. These edges will be grouped together if
+\begin{eqnarray}
+\left|\sum_{i=1}^{n_s}{\Delta x(t_s^i)}-\left |\sum_{i=1}^{n_e}{\Delta x(t_e^i)}\right| \right|\leq \alpha,
+\end{eqnarray}
+where $n_s$, $n_e$ are the number of consecutive rising edges and falling edges, respectively.
+
+In the ED algorithm, a feature is composed of the first rising edge and the last falling edge, while all active power values between them are used in DTW feature. To improve the performance of the edge detector, a median filter can also be applied to remove the peaks~\cite{Norford96,Marceau2000ECM}.
+
+\input{./chapters/chapter4/ED}
+
+\input{./chapters/chapter4/DTW}
+
+\section{Conclusion}
+

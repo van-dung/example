@@ -1,0 +1,129 @@
+\documentclass[10pt]{book}
+
+%%%%%%%%%%
+% Packages utilises
+%%%%%%%%%%
+% Langue
+\usepackage[T1]{fontenc}
+\usepackage[mac]{inputenc}
+\usepackage[frenchb]{babel} % On peut aussi mettre english ici.
+% Figures et couleurs
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{color}
+\definecolor{gris}{gray}{0.45}
+% Font math
+\usepackage{amssymb, amsmath, amsfonts}
+\usepackage{dsfont}
+% Mise en page latex et police
+\usepackage{vmargin}
+
+%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%
+
+%\addtocounter{page}{-1} % Pour revenir a 0 dans la numerotation des pages.
+
+%%%%%%%%%%
+% PREMIERE DE COUVERTURE
+%%%%%%%%%%
+
+\newlength{\plarg}
+\setlength{\plarg}{8cm}
+\newlength{\glarg}
+\setlength{\glarg}{14cm}
+\newlength{\Glarg}
+\setlength{\Glarg}{15cm}
+
+\begin{titlepage}
+\thispagestyle{empty}
+%\noindent
+%\noindent
+%\begin{minipage}{\glarg}
+%{\large LOGO labo} \hfill {\large LOGO Ecole} 
+%{\rule{\glarg}{1pt}} \vspace{-1cm}
+%\begin{center}
+%\begin{tabular}{p{13cm}r}
+%\hspace{-2mm}\textbf{Nom Labo} & \textbf{LABO} \\
+%\hspace{-2mm}Nom complet & Section \dots \\
+%\hspace{-2mm}du laboratoire & 
+%\end{tabular}
+%\end{center}
+%\end{minipage}
+
+\vspace{-1cm}
+\begin{minipage}{\glarg}
+\vspace{-4.5cm}
+\hspace{-1.5cm}{\color{gris}\large\bf N$^o$ d'ordre  : \hspace{9.5cm} \bf ANN\'EE 2017}
+\end{minipage}
+\vspace{-2cm}
+\begin{figure}[htp]
+\center
+\hspace{-1cm}\includegraphics[angle=0,width=15cm]{logo.png}
+\end{figure}
+
+\begin{center}
+\begin{minipage}{\glarg}
+\vspace{0.5cm}
+\centering{\Large\bfseries TH\`ESE / UNIVERSIT\'E DE RENNES 1}\\ \vspace{0mm}\emph{\Large sous le sceau de l'Universit\'e Bretagne Loire}\\ \vspace{0.5cm}
+{\Large pour le grade de}\\ \vspace{2mm}
+{\Large\bf DOCTEUR DE L'UNIVERSIT\'E DE RENNES 1}\\ \vspace{0.4cm}
+\emph{\Large Mention :  Traitement du Signal et T\'el\'ecommunications}\\ \vspace{2mm}
+{\Large\bf \'Ecole doctorale MATISSE}\\ \vspace{0.3cm}
+{\Large pr\'esent\'ee par} \\ \vspace{3mm}
+{\Huge\bf Xuan-Chien LE}\\ \vspace{0.4cm}
+{\Large pr\'epar\'ee \`a l'unit\'e de recherche UMR6074 IRISA\\
+\hspace{-1cm}Institut de recherche en informatique et syst\`emes al\'eatoires - CAIRN\\
+\hspace{-1cm}\'Ecole Nationale Sup\'erieure des Sciences Appliqu\'ees et de Technologie}\vspace{0.3cm}
+\\
+\hspace{-20mm}{\rule{\Glarg}{1pt}}\\
+\vspace{8mm}
+
+\begin{tabular}{p{7cm}p{10cm}}
+\begin{minipage}{\plarg}
+%\vspace{-4cm}
+
+%Global power management system for self-powered autonomous wireless sensor node
+
+\hspace{-1.8cm}{\huge\bf Improving}\vspace{5mm}
+
+\hspace{-1.8cm}{\huge\bf Performance of}\vspace{5mm}
+
+\hspace{-1.8cm}{\huge\bf Non-Intrusive }\vspace{5mm}
+
+\hspace{-1.8cm}{\huge\bf Load Monitoring}\vspace{5mm}
+
+\hspace{-1.8cm}{\huge\bf with  Low-Cost}\vspace{5mm}
+
+\hspace{-1.8cm}{\huge\bf Sensor Networks}\vspace{5mm}
+
+\end{minipage}
+&
+\begin{minipage}{\plarg}
+{\large\bf Th\`ese soutenue \`a Lannion \vspace{0mm}\newline}
+{\large\bf le  \vspace{2mm}\newline}
+{\large devant le jury compos\'e de : \vspace{2mm}\newline}
+{\large\bf DIOURIS Jean-Fran\c cois \vspace{0mm}\newline}
+{Professeur \`a l'Universit\'e de Nantes \!/\! rapporteur\vspace{1mm}\newline}
+{\large\bf CLAVIER Laurent \vspace{0mm}\newline}
+{Professeur \`a l'Institut Mines Telecom \!/\! rapporteur\vspace{1mm}\newline}
+{\large\bf BACHA Seddik \vspace{0mm}\newline}
+{Professeur \`a l'Universit\'e de Grenoble \!/\! examinateur\vspace{1mm}\newline}
+{\large\bf MENGA David \vspace{0mm}\newline}
+{Ing\'enieur Chercheur \`a EDF Lab \!/\! examinateur\vspace{1mm}\newline}
+{\large\bf LEPRETTRE Beno\^it \vspace{0mm}\newline}
+{Ing\'enieur Chercheur \`a Schneider Electric \!/\! examinateur\vspace{1mm}\newline}
+{\large\bf LANGLAIS Charlotte \vspace{0mm}\newline}
+{Ma\^itre de Conf\'erences \`a Telecom Bretagne \!/\! examinateur\newline}
+{\large\bf SENTIEYS Olivier \vspace{0mm}\newline}
+{Professeur \`a l'Universit\'e de Rennes 1 \!/\!  directeur de th\`ese\vspace{1mm}\newline}
+{\large\bf VRIGNEAU Baptiste \vspace{0mm}\newline}
+{Ma\^itre de Conf\'erences \`a l'Universit\'e de Rennes 1 \!/\! co-directeur de th\`ese\newline}
+\end{minipage}
+\end{tabular}
+
+\end{minipage}
+\end{center}
+\end{titlepage}
+
+\end{document}

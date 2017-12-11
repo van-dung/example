@@ -1,0 +1,132 @@
+\documentclass[10pt]{book}
+
+%%%%%%%%%%
+% Packages utilises
+%%%%%%%%%%
+% Langue
+\usepackage[T1]{fontenc}
+\usepackage[frenchb]{babel} % On peut aussi mettre english ici.
+% Figures et couleurs
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{color}
+\definecolor{gris}{gray}{0.45}
+% Font math
+\usepackage{amssymb, amsmath, amsfonts}
+\usepackage{dsfont}
+% Mise en page latex et police
+\usepackage{vmargin}
+
+% ############################ These commands are used to add blank pages ############################
+\newcommand{\blankspace}{\clearpage
+\thispagestyle{empty}
+\phantom{a}
+\vfill
+\newpage
+\vfill
+\addtocounter{page}{-1}}
+% #####################################################################################################
+
+%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%
+
+%\addtocounter{page}{-1} % Pour revenir a 0 dans la numerotation des pages.
+
+%%%%%%%%%%
+% PREMIERE DE COUVERTURE
+%%%%%%%%%%
+
+\newlength{\plarg}
+\setlength{\plarg}{8cm}
+\newlength{\glarg}
+\setlength{\glarg}{14cm}
+\newlength{\Glarg}
+\setlength{\Glarg}{15cm}
+
+\begin{titlepage}
+\thispagestyle{empty}
+%\noindent
+%\noindent
+%\begin{minipage}{\glarg}
+%{\large LOGO labo} \hfill {\large LOGO Ecole} 
+%{\rule{\glarg}{1pt}} \vspace{-1cm}
+%\begin{center}
+%\begin{tabular}{p{13cm}r}
+%\hspace{-2mm}\textbf{Nom Labo} & \textbf{LABO} \\
+%\hspace{-2mm}Nom complet & Section \dots \\
+%\hspace{-2mm}du laboratoire & 
+%\end{tabular}
+%\end{center}
+%\end{minipage}
+
+\vspace{-1cm}
+\begin{minipage}{\glarg}
+\vspace{-4.5cm}
+\hspace{-1.5cm}{\color{gris}\large\bf N$^o$ d'ordre  : \hspace{9cm} \bf YEAR 2017}
+\end{minipage}
+\vspace{-2cm}
+%\vspace{-2.5cm} (modified but not used)
+\begin{figure}[htp]
+\center
+\hspace{-1cm}\includegraphics[angle=0,width=16cm]{Logos.png}
+\end{figure}
+
+\begin{center}
+\begin{minipage}{\glarg}
+%\vspace{0.5cm} (orignal)
+\centering{\Large\bfseries THESIS / UNIVERSITY OF RENNES 1}\\ \vspace{0mm}\emph{\Large under the seal of the European University of Brittany}\\ \vspace{0.5cm}
+{\Large for the degree of}\\ \vspace{1.5mm}
+{\Large\bf DOCTOR OF THE UNIVERSITY OF RENNES 1}\\ \vspace{0.4cm}
+\emph{\Large Mention : Signal Processing}\\ \vspace{2mm}
+{\Large\bf Ecole doctorale (MATISSE)}\\ \vspace{0.3cm}
+{\Large presented by} \\ \vspace{3mm}
+{\Huge\bf Xuan-Chien LE}\\ \vspace{0.4cm}
+{\Large prepared at research unit UMR6074 IRISA\\
+\hspace{-1cm}Institut de recherche en informatique et syst\`emes al\'eatoires - CAIRN\\
+\hspace{-1cm}\'Ecole National Sup\'erieure des Sciences Appliqu\'ees et de Technologie}\vspace{0.3cm}
+\\
+\hspace{-20mm}{\rule{\Glarg}{1pt}}\\
+\vspace{6mm}
+
+\begin{tabular}{p{7cm}p{10cm}}
+\begin{minipage}{\plarg}
+%\vspace{-3cm}
+\hspace{-1.8cm}{\huge\bf Improving Performance of }\vspace{5mm}
+
+\hspace{-1.8cm}{\huge\bf Non-Intrusive }\vspace{5mm}
+
+\hspace{-1.8cm}{\huge\bf Load Monitoring with }\vspace{5mm}
+
+\hspace{-1.8cm}{\huge\bf Low-Cost Sensor Networks}\vspace{5mm}                                                                                                                                                                                                  
+
+\end{minipage}
+&
+\begin{minipage}{\plarg}
+%{\large\bf Thesis defended in Lannion\vspace{1mm}\newline}
+%{\large\bf 15 December 2010\vspace{2mm}\newline}
+%{\large the jury consists of : \vspace{2mm}\newline}
+%{\Large\bf Jean ARLAT\vspace{0mm}\newline}
+%{ Professor, Director of Research CNRS\newline LAAS \!/\! president\vspace{1mm}\newline}
+%{\Large\bf Michel RENOVEL\vspace{0mm}\newline}
+%{ Professor, Director of Research CNRS \newline LIRMM \!/\! reporter\vspace{1mm}\newline}
+%{\Large\bf Guy GOGNIAT\vspace{0mm}\newline}
+%{ Professor\newline University of South Brittany \!/\! reporter\vspace{1mm}\newline}
+%{\Large\bf Stanis\l{}aw~J.~PIESTRAK\vspace{0mm}\newline}
+%{ Professor\newline University of Metz \vspace{1mm}\newline}
+%{\Large\bf Didier DEMIGNY\vspace{0mm}\newline}
+%{ Professor\newline University of Rennes 1 \!/\! thesis director\vspace{1mm}\newline}
+%{\Large\bf S\'ebastien PILLEMENT\vspace{0mm}\newline}
+%{ Assistant-Professor\newline University of Rennes 1 \!/\! thesis co-director}
+
+\end{minipage}
+\end{tabular}
+\vspace{-3cm}
+
+\end{minipage}
+\end{center}
+\end{titlepage}
+
+%\blankspace % This will add blank page here
+
+\end{document}

@@ -1,0 +1,8 @@
+\select@language {english}
+\select@language {frenchb}
+\select@language {english}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Typical Smart Building Automation model.\relax }}{2}{figure.caption.11}
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Variation on the power draw when the occupant turns on some devices \cite {Chen13ACM}. The variation occurs on the average power, standard deviation and power range.\relax }}{3}{figure.caption.12}
+\contentsline {figure}{\numberline {1.3}{\ignorespaces Direct and indirect power measurement \cite {Kim09Ubicomp}.\relax }}{6}{figure.caption.15}
+\contentsline {figure}{\numberline {1.4}{\ignorespaces The ViridiScope system takes the total power consumption, magnetic field and internal power states information to estimate the power usage of each individual appliance by solving the $l1$-norm minimization problem \cite {Kim09Ubicomp}.\relax }}{8}{figure.caption.21}
